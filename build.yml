@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  tasks:
+  - name: Build bitcoind and push to Docker Hub
+    docker_image:
+      path: .
+      name: metrictwo/bitcoind
+      tag: v1
+      push: yes

@@ -1,0 +1,26 @@
+---
+- hosts: tag_Service_bitcoind
+  tasks:
+  - name: Install Docker
+    package:
+      name: docker
+      state: present
+  - name: Enable/Run Docker
+    service:
+      name: docker
+      state: started
+      enabled: yes
+  - name: Install pip
+    package:
+      name: python2-pip
+      state: present
+  - name: Install docker-py to resolve Ansible bug
+    pip:
+      name: docker-py
+  - name: Run bitcoind
+    docker_container:
+      name: bitcoind
+      image: metrictwo/bitcoind:v1
+      command: /bitcoind
+      ports:
+      - "8333:8333"
